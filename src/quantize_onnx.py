@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from onnxruntime.quantization import QuantType, quantize_dynamic
+from onnxruntime.quantization.quant_utils import load_model_with_shape_infer, QuantizationMode
 
 from src.utils import file_size_mb, save_json
 
@@ -32,6 +33,7 @@ def main() -> None:
         model_input=str(input_path),
         model_output=str(output_path),
         weight_type=weight_type,
+        extra_options={"-disable_standard_qdq": False, "ForceSymmetric": False},
     )
 
     report = {
